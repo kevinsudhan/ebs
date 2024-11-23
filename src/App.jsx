@@ -1,17 +1,21 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Carousel from './components/Carousel';
-import Services from './components/Services';
-import WhyChooseUs from './components/WhyChooseUs';
+import Home from './pages/Home';
+import PersonalLoan from './pages/PersonalLoan';
+import HealthInsurance from './pages/HealthInsurance';
+import EmiCalculator from './pages/EmiCalculator';
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-white">
         <Navbar />
-        <Carousel />
-        <Services />
-        <WhyChooseUs />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/personal-loan" element={<PersonalLoan />} />
+          <Route path="/health-insurance" element={<HealthInsurance />} />
+          <Route path="/emi-calculator" element={<EmiCalculator />} />
+        </Routes>
       </div>
     </Router>
   );
