@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   CreditCardIcon, 
@@ -19,7 +20,8 @@ const services = [
     description: "Quick personal loans with competitive interest rates",
     icon: UserIcon,
     image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
-    category: "loans"
+    category: "loans",
+    href: "/personal-loan"
   },
   {
     title: "Credit Card",
@@ -75,7 +77,8 @@ const services = [
     description: "Comprehensive coverage for you and your family",
     icon: HeartIcon,
     image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80",
-    category: "insurance"
+    category: "insurance",
+    href: "/health-insurance"
   },
   {
     title: "Life Insurance",
@@ -87,14 +90,8 @@ const services = [
 ];
 
 const ServiceCard = ({ service, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
-    >
+  const CardContent = () => (
+    <>
       <div className="relative h-36 overflow-hidden">
         <img
           src={service.image}
@@ -115,6 +112,24 @@ const ServiceCard = ({ service, index }) => {
           {service.description}
         </p>
       </div>
+    </>
+  );
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true }}
+      className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+    >
+      {service.href ? (
+        <Link to={service.href} className="block">
+          <CardContent />
+        </Link>
+      ) : (
+        <CardContent />
+      )}
     </motion.div>
   );
 };

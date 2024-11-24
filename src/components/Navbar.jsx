@@ -8,7 +8,7 @@ const menuItems = [
     name: "Loans",
     href: "#",
     submenu: [
-      { name: "Personal Loans", href: "#" },
+      { name: "Personal Loans", href: "/personal-loan" },
       { name: "Business Loan", href: "#" },
       { name: "Home Loan", href: "#" },
       { name: "Home Loan Balance Transfer", href: "#" },
@@ -20,21 +20,21 @@ const menuItems = [
     name: "Insurance",
     href: "#",
     submenu: [
-      { name: "Health Insurance", href: "#" },
+      { name: "Health Insurance", href: "/health-insurance" },
       { name: "Life Insurance", href: "#" },
     ],
   },
   {
     name: "EMI Calculator",
-    href: "#",
+    href: "/emi-calculator",
     submenu: [
-      { name: "Home Loan EMI Calculator", href: "#" },
-      { name: "Personal Loan EMI Calculator", href: "#" },
-      { name: "Business Loan EMI Calculator", href: "#" },
-      { name: "Compound Interest Calculator", href: "#" },
-      { name: "Loan Prepayment Calculator", href: "#" },
-      { name: "RD Calculator", href: "#" },
-      { name: "FD Calculator", href: "#" },
+      { name: "Home Loan EMI Calculator", href: "/emi-calculator" },
+      { name: "Personal Loan EMI Calculator", href: "/emi-calculator" },
+      { name: "Business Loan EMI Calculator", href: "/emi-calculator" },
+      { name: "Compound Interest Calculator", href: "/emi-calculator" },
+      { name: "Loan Prepayment Calculator", href: "/emi-calculator" },
+      { name: "RD Calculator", href: "/emi-calculator" },
+      { name: "FD Calculator", href: "/emi-calculator" },
     ],
   },
   {
@@ -64,11 +64,6 @@ const menuItems = [
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null);
-
-  const toggleMenu = (index) => {
-    setActiveMenu(activeMenu === index ? null : index);
-  };
 
   return (
     <nav className="bg-[#284a8c] fixed w-full top-0 z-50">
@@ -92,7 +87,6 @@ const Navbar = () => {
               <div key={item.name} className="relative group">
                 {item.submenu ? (
                   <button
-                    onClick={() => toggleMenu(index)}
                     className="flex items-center text-white hover:text-opacity-80 py-2 text-sm font-medium transition-all duration-200 bg-transparent"
                   >
                     {item.name}
@@ -108,8 +102,8 @@ const Navbar = () => {
                 )}
 
                 {/* Dropdown Menu */}
-                {item.submenu && activeMenu === index && (
-                  <div className="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-lg py-2">
+                {item.submenu && (
+                  <div className="absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-lg py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     {item.submenu.map((subItem) => (
                       <Link
                         key={subItem.name}
@@ -155,26 +149,23 @@ const Navbar = () => {
                   {item.submenu ? (
                     <div>
                       <button
-                        onClick={() => toggleMenu(index)}
                         className="flex items-center justify-between w-full text-white hover:text-opacity-80 text-base font-medium bg-transparent"
                       >
                         {item.name}
-                        <ChevronDownIcon className={`h-5 w-5 transition-transform duration-200 ${activeMenu === index ? 'rotate-180' : ''}`} />
+                        <ChevronDownIcon className={`h-5 w-5 transition-transform duration-200`} />
                       </button>
                       
-                      {activeMenu === index && (
-                        <div className="mt-2 pl-4 space-y-2">
-                          {item.submenu.map((subItem) => (
-                            <Link
-                              key={subItem.name}
-                              to={subItem.href}
-                              className="block py-2 text-sm text-white/80 hover:text-white transition-colors duration-200"
-                            >
-                              {subItem.name}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
+                      <div className="mt-2 pl-4 space-y-2">
+                        {item.submenu.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            to={subItem.href}
+                            className="block py-2 text-sm text-white/80 hover:text-white transition-colors duration-200"
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   ) : (
                     <Link
