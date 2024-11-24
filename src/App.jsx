@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import PersonalLoan from './pages/PersonalLoan';
 import HealthInsurance from './pages/HealthInsurance';
 import EmiCalculator from './pages/EmiCalculator';
+import ChatbotButton from './components/ChatbotButton';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/health-insurance" element={<HealthInsurance />} />
           <Route path="/emi-calculator" element={<EmiCalculator />} />
         </Routes>
+        <ChatbotButton />
       </div>
     </Router>
   );

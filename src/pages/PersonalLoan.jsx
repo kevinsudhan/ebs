@@ -1,4 +1,7 @@
 import React from 'react';
+import personalLoanBg from '../assets/images/backgrounds/personalloan.jpeg';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const PersonalLoan = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -114,75 +117,199 @@ const PersonalLoan = () => {
     0, 1 // Clone first two cards
   ];
 
+  const sampleLoans = [
+    {
+      name: "Starter Loan",
+      amount: "Up to ₹5 Lakhs",
+      interestRate: "10.49%",
+      tenure: "12-36 months",
+      emi: "₹11,111",
+      features: ["Quick approval", "Minimal documentation", "No collateral"]
+    },
+    {
+      name: "Premium Loan",
+      amount: "Up to ₹20 Lakhs",
+      interestRate: "11.49%",
+      tenure: "12-48 months",
+      emi: "₹22,222",
+      features: ["Flexible repayment", "Higher limits", "Special benefits"]
+    },
+    {
+      name: "Elite Loan",
+      amount: "Up to ₹40 Lakhs",
+      interestRate: "12.49%",
+      tenure: "12-60 months",
+      emi: "₹33,333",
+      features: ["Best rates", "Maximum flexibility", "Priority processing"]
+    }
+  ];
+
+  const commonUses = [
+    {
+      title: "Debt Consolidation",
+      description: "Combine multiple high-interest debts into a single, manageable monthly payment with potentially lower interest rates.",
+      icon: (
+        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+      )
+    },
+    {
+      title: "Home Improvements",
+      description: "Transform your living space with renovations, repairs, or upgrades that add value to your property.",
+      icon: (
+        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+      )
+    },
+    {
+      title: "Medical Expenses",
+      description: "Cover unexpected medical costs, planned procedures, or healthcare expenses not covered by insurance.",
+      icon: (
+        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+      )
+    },
+    {
+      title: "Education",
+      description: "Invest in your future through education, professional development courses, or skill enhancement programs.",
+      icon: (
+        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 14l9-5-9-5-9 5 9 5z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+        </svg>
+      )
+    },
+    {
+      title: "Wedding",
+      description: "Plan your dream wedding without compromise, covering venue, catering, decorations, and other celebrations.",
+      icon: (
+        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      )
+    },
+    {
+      title: "Business",
+      description: "Grow your business with inventory purchases, equipment upgrades, or working capital for operations.",
+      icon: (
+        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      )
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gray-900">
       {/* Overview Section */}
-      <section className="pt-16 pb-12 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-light text-white mb-3">Personal Loan</h1>
-            <p className="text-lg text-gray-300 font-light mb-8">Streamlined financing for life's important moments</p>
-            <button className="bg-blue-600 text-white px-10 py-3 rounded-lg text-lg font-light hover:bg-blue-700 transition-all duration-300 shadow-sm hover:shadow-md">
-              Start Application
-            </button>
-          </div>
-        </div>
-      </section>
+      <section 
+        className="min-h-[600px] relative flex items-center justify-center py-24"
+        style={{
+          backgroundImage: `linear-gradient(to bottom, rgba(17, 24, 39, 0.7), rgba(17, 24, 39, 0.8)), url(${personalLoanBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        {/* Decorative overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gray-900"></div>
 
-      {/* Our Values Section */}
-      <section className="py-12 bg-gray-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-6 mb-10">
-            <div className="p-6 bg-gray-700 rounded-lg shadow-sm border border-gray-600 hover:shadow-md transition-all duration-300">
-              <h3 className="text-base font-medium text-white mb-2">Simple Process</h3>
-              <p className="text-sm text-gray-300">Digital application with minimal docs</p>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center space-y-6">
+            <div className="space-y-4">
+              <h1 className="text-6xl font-light text-white mb-3 tracking-tight">
+                Personal <span className="font-medium">Loan</span>
+              </h1>
+              <p className="text-xl text-gray-200 font-light max-w-2xl mx-auto leading-relaxed">
+                Streamlined financing for life's important moments, tailored to your needs
+              </p>
             </div>
-            <div className="p-6 bg-gray-700 rounded-lg shadow-sm border border-gray-600 hover:shadow-md transition-all duration-300">
-              <h3 className="text-base font-medium text-white mb-2">24hr Approval</h3>
-              <p className="text-sm text-gray-300">Quick fund disbursement</p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
+              <button className="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-light hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 min-w-[200px]">
+                Start Application
+              </button>
+              <button className="bg-transparent text-white px-8 py-3 rounded-lg text-lg font-light border border-white/30 hover:bg-white/10 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 backdrop-blur-sm min-w-[200px]">
+                Learn More
+              </button>
             </div>
-            <div className="p-6 bg-gray-700 rounded-lg shadow-sm border border-gray-600 hover:shadow-md transition-all duration-300">
-              <h3 className="text-base font-medium text-white mb-2">Flexible Terms</h3>
-              <p className="text-sm text-gray-300">Customizable repayment options</p>
+
+            {/* Feature badges */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12">
+              <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20">
+                <p className="text-white/90 font-medium">Quick Approval</p>
+                <p className="text-white/70 text-sm">Within 24 hours</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20">
+                <p className="text-white/90 font-medium">Flexible Terms</p>
+                <p className="text-white/70 text-sm">Up to 60 months</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20">
+                <p className="text-white/90 font-medium">Competitive Rates</p>
+                <p className="text-white/70 text-sm">Starting at 8.99%</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Benefits Section */}
-      <section className="py-12 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 p-8">
-            <h2 className="text-2xl font-light text-white mb-6">Common Uses</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-300">
-              <div className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
-                Debt consolidation
-              </div>
-              <div className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
-                Home improvements
-              </div>
-              <div className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
-                Medical expenses
-              </div>
-              <div className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
-                Education funding
-              </div>
-              <div className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
-                Wedding expenses
-              </div>
-              <div className="flex items-center">
-                <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
-                Business expansion
-              </div>
-            </div>
+      <motion.section 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="py-16 bg-gray-900"
+      >
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-3xl font-light text-white mb-8 text-center"
+          >
+            Common <span className="font-medium">Uses</span>
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {commonUses.map((use, index) => {
+              const [ref, inView] = useInView({
+                threshold: 0.2,
+                triggerOnce: true
+              });
+
+              return (
+                <motion.div
+                  key={index}
+                  ref={ref}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 p-6 hover:bg-gray-800/70 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
+                >
+                  <div className="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                    {use.icon}
+                  </div>
+                  <h3 className="text-xl font-medium text-white mb-2">{use.title}</h3>
+                  <p className="text-gray-400 mb-3">{use.description}</p>
+                  <div className="text-sm text-gray-500">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-1 h-1 bg-blue-400 rounded-full"></span>
+                      <span>Lower overall interest rates</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="w-1 h-1 bg-blue-400 rounded-full"></span>
+                      <span>Simplified monthly payments</span>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Popular Loan Offers Section */}
       <section className="py-16 bg-gray-900">
@@ -451,53 +578,69 @@ const PersonalLoan = () => {
 
       {/* Sample Personal Loans Section */}
       <section className="py-12 bg-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-light text-white mb-8 text-center">Sample Loan Options</h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                name: "Starter Loan",
-                amount: "Up to ₹5 Lakhs",
-                interest: "10.49%",
-                tenure: "12-36 months",
-                features: ["Quick approval", "Minimal documentation", "No collateral"]
-              },
-              {
-                name: "Premium Loan",
-                amount: "Up to ₹20 Lakhs",
-                interest: "11.49%",
-                tenure: "12-48 months",
-                features: ["Flexible repayment", "Higher limits", "Special benefits"]
-              },
-              {
-                name: "Elite Loan",
-                amount: "Up to ₹40 Lakhs",
-                interest: "12.49%",
-                tenure: "12-60 months",
-                features: ["Best rates", "Maximum flexibility", "Priority processing"]
-              }
-            ].map((loan, index) => (
-              <div key={index} className="bg-gray-800 rounded-lg shadow-sm border border-gray-700 overflow-hidden">
-                <div className="bg-blue-600 text-white p-4 text-center">
-                  <h3 className="text-xl font-medium">{loan.name}</h3>
-                </div>
-                <div className="p-6">
-                  <div className="text-center mb-4">
-                    <div className="text-2xl font-light text-white mb-1">{loan.amount}</div>
-                    <div className="text-sm text-blue-200">Starting at {loan.interest} p.a.</div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-light text-white mb-12 text-center">Sample Loan Options</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {sampleLoans.map((loan, index) => (
+              <div key={index} className="w-full">
+                <div className="h-full bg-gray-900/50 backdrop-blur-lg rounded-2xl p-6 border border-gray-800/50 hover:border-blue-500/30 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 group flex flex-col">
+                  {/* Loan Amount */}
+                  <div className="relative mb-6">
+                    <div className="absolute -top-3 left-0 bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm font-medium">
+                      Sample Plan {index + 1}
+                    </div>
+                    <div className="flex items-baseline mt-4">
+                      <span className="text-3xl font-bold text-white">₹500000</span>
+                      <span className="ml-1 text-gray-400 text-sm">Lakhs</span>
+                    </div>
                   </div>
-                  <div className="text-sm text-blue-200 mb-4">
-                    <div className="mb-2">Tenure: {loan.tenure}</div>
-                    <ul className="space-y-1">
-                      {loan.features.map((feature, i) => (
-                        <li key={i} className="flex items-center">
-                          <span className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+
+                  {/* Loan Details */}
+                  <div className="space-y-4 mb-6">
+                    <div className="flex justify-between items-center pb-3 border-b border-gray-800/50">
+                      <span className="text-gray-400 text-sm">Interest Rate</span>
+                      <span className="text-white font-semibold text-sm">{loan.interestRate}</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-3 border-b border-gray-800/50">
+                      <span className="text-gray-400 text-sm">Tenure</span>
+                      <span className="text-white font-semibold text-sm">{loan.tenure}</span>
+                    </div>
+                    <div className="flex justify-between items-center pb-3 border-b border-gray-800/50">
+                      <span className="text-gray-400 text-sm">EMI</span>
+                      <span className="text-white font-semibold text-sm">{loan.emi}</span>
+                    </div>
                   </div>
-                  <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors duration-300">
+
+                  {/* Features */}
+                  <div className="space-y-3 flex-grow">
+                    <div className="flex items-center text-gray-300 text-sm">
+                      <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center mr-3 group-hover:bg-blue-500/20 transition-colors duration-300">
+                        <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                      </div>
+                      Quick Processing
+                    </div>
+                    <div className="flex items-center text-gray-300 text-sm">
+                      <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center mr-3 group-hover:bg-blue-500/20 transition-colors duration-300">
+                        <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      Minimal Documentation
+                    </div>
+                    <div className="flex items-center text-gray-300 text-sm">
+                      <div className="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center mr-3 group-hover:bg-blue-500/20 transition-colors duration-300">
+                        <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      Flexible Repayment
+                    </div>
+                  </div>
+
+                  {/* Apply Button */}
+                  <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 text-sm font-semibold tracking-wide transform hover:-translate-y-0.5 mt-6">
                     Apply Now
                   </button>
                 </div>

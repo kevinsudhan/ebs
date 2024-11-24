@@ -69,6 +69,19 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+@keyframes rotate-360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-360 {
+  animation: rotate-360 0.4s ease-in-out;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
